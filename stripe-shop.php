@@ -50,7 +50,8 @@ class StripeShopPlugin extends Plugin
         // Enable the main event we are interested in
         $this->enable([
             'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
-            'onAssetsInitialized' => ['onAssetsInitialized', 0]
+            'onAssetsInitialized' => ['onAssetsInitialized', 0],
+            'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
         ]);
 
         $uri = $this->grav['uri'];
@@ -102,7 +103,6 @@ class StripeShopPlugin extends Plugin
         $assets->addJs('plugins://stripe-shop/js/base.js');
         $assets->addJs('plugins://stripe-shop/js/events.js');
         $assets->addJs('plugins://stripe-shop/js/ui.js');
-        $assets->addCss('plugin://stripe-shop/css/stripe-shop.css');
 
         $global = "if (!window.PLUGIN_STRIPE_CHECKOUT) { window.PLUGIN_STRIPE_CHECKOUT = {}; }";
         $json_configs = json_encode($this->configs);
