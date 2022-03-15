@@ -10,3 +10,4 @@ en:
     CHECKOUT_HELP: Custom checkout page
     SHIPPING: Shipping countries
     SHIPPING_HELP: ISO country codes for shipping rates
+    URL_VALIDATE: Must start with either http:// or https://

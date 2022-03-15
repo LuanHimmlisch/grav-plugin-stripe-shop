@@ -1,4 +1,5 @@
 <?php
+
 namespace Grav\Plugin;
 
 use Grav\Common\Assets;
@@ -30,7 +31,8 @@ class StripeShopPlugin extends Plugin
     {
         return [
             'onPluginsInitialized' => ['onPluginsInitialized', 0],
-            'onGetPageTemplates' => ['onGetPageTemplates', 0]
+            'onGetPageTemplates' => ['onGetPageTemplates', 0],
+            'onGetPageBlueprints' => ['onGetPageBlueprints', 0]
         ];
     }
 
@@ -52,8 +54,7 @@ class StripeShopPlugin extends Plugin
         ]);
 
         $uri = $this->grav['uri'];
-        if ($this->configs['checkout_route'] == $uri->path())
-        {
+        if ($this->configs['checkout_route'] == $uri->path()) {
             $this->enable([
                 'onPagesInitialized' => ['addCheckoutPage', 0]
             ]);
@@ -69,6 +70,17 @@ class StripeShopPlugin extends Plugin
         /** @var Types $types */
         $types = $event->types;
         $types->scanTemplates('plugins://stripe-shop/templates');
+    }
+
+    /**
+     * Add page blueprints types.
+     * @param Event $event
+     */
+    public function onGetPageBlueprints(Event $event)
+    {
+        /** @var Types $types */
+        $types = $event->types;
+        $types->scanBlueprints('plugins://stripe-shop/blueprints');
     }
 
     /**
@@ -116,7 +128,6 @@ class StripeShopPlugin extends Plugin
             $page->slug(basename($url));
             $pages->addPage($page, $url);
         }
-
     }
 
     /**

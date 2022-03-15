@@ -1,0 +1,18 @@
+title: Shop Product
+"@extends": default
+
+form:
+  fields:
+    tabs:
+      fields:
+        content:
+          type: tab
+          fields:
+            header.price:
+              label: Price
+              type: number
+              help: Price to show
+            header.price_id:
+              label: Price ID
+              type: text
+              help: Price ID from the Stripe API

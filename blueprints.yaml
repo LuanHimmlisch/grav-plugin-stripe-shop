@@ -40,16 +40,26 @@ form:
       type: text
       label: PLUGIN_STRIPE_SHOP.KEY
       help: PLUGIN_STRIPE_SHOP.KEY_HELP
+      validate:
+        required: true
 
     success_url: 
       type: text
       label: PLUGIN_STRIPE_SHOP.SUCCESS
       help: PLUGIN_STRIPE_SHOP.SUCCESS_HELP
+      validate:
+        required: true
+        pattern: '^(https|http):\/\/(.*)$'
+        message: PLUGIN_STRIPE_SHOP.URL_VALIDATE
 
     cancel_url: 
       type: text
       label: PLUGIN_STRIPE_SHOP.CANCEL
       help: PLUGIN_STRIPE_SHOP.CANCEL_HELP
+      validate:
+        required: true
+        pattern: '^(https|http):\/\/(.*)$'
+        message: PLUGIN_STRIPE_SHOP.URL_VALIDATE
 
     checkout_route: 
       type: text
