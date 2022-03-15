@@ -1,0 +1,10 @@
+{% set item_image = page.media.images|first %}
+
+<div class="shop_product_item" >
+    <h2 class="shop_product_item_title"><a href="{{ page.url }}">{{ page.header.title }}</a></h2>
+    <a class="shop_product_item_image" href="{{ page.url }}"><img src="{{ item_image.url|e }}"></a>
+    <div class="shop_product_item_options">
+        <h3 class="shop_product_item_price">${{ page.header.price }}</h3>
+        {% include 'partials/buttons/add_to_cart.html.twig' with { 'price_id': page.header.price_id, 'page_url': page.url, 'page_img': page.media.images|first.url,'price': page.header.price } %}
+    </div>
+</div>

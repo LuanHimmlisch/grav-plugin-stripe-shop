@@ -7,6 +7,7 @@ Example: add this to your product templates:
 {% include 'partials/buttons/checkout.html.twig' %}
 #}
 
-<button data-redirect-to-checkout>Checkout Now</button>
-
-{# <a href="#" data-redirect-to-checkout>Checkout Now</a> #}
+<button class="shop_button_checkout" data-redirect-to-checkout>
+    <i class="fa fa-shopping-cart pulse" style="pointer-events: none;"></i>
+    <p class="shop_checkout_items" id="shop-cart-items">...</p>
+</button>

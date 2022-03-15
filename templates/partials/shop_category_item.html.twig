@@ -1,0 +1,6 @@
+{% set shop_image = page.media.images|first %}
+
+<div class="shop_category_item">
+    <a class="shop_category_item_image" href="{{ page.url }}"><img src="{{ shop_image.url|e }}"></a>
+    <h2 class="shop_category_item_title"><a href="{{ page.url }}">{{ page.header.title }}</a></h2>
+</div>

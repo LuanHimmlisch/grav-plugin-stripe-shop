@@ -1,0 +1,18 @@
+{% extends 'partials/shop_base.html.twig' %}
+
+{% block content %}
+
+    {{ parent() }}
+
+    <div class="content-wrapper">
+        {{ page.content|raw }}
+
+        <div class="shop-products">
+            {% for child in page.collection() %}
+                {% if (child.header.unpublished is not defined or (child.header.unpublished == false)) %}
+                    {% include 'partials/shop_product_item.html.twig' with {'page': child, 'parent': page} %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

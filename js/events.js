@@ -1,11 +1,10 @@
-document.addEventListener("DOMContentLoaded", function()
-{
-
+document.addEventListener("DOMContentLoaded", function () {
     /***********************************************************/
     /* Add to Cart buttons: data-add-to-cart="sku"
     /***********************************************************/
     document.addEventListener('click', function (event) {
         if (!event.target.matches('[data-add-to-cart]')) return;
+        console.log('click');
         event.preventDefault();
 
         const button = event.target;
@@ -13,7 +12,8 @@ document.addEventListener("DOMContentLoaded", function()
         const sku = button.dataset.addToCart;
         const extras = button.dataset.addToCartExtras ? JSON.parse(button.dataset.addToCartExtras) : null;
 
-        StripeCheckout.addProduct(sku, quantity, extras);
+        StripeShop.addProduct(sku, quantity, extras);
+        StripeShop.uiUpdateItemsBy(quantity);
     }, false);
 
 
@@ -28,7 +28,8 @@ document.addEventListener("DOMContentLoaded", function()
         const quantity = button.dataset.increaseQuantity ? button.dataset.increaseQuantity : 1;
         const sku = button.dataset.itemSku;
 
-        StripeCheckout.increaseQuantity(sku, quantity);
+        StripeShop.increaseQuantity(sku, quantity);
+        StripeShop.uiUpdateItemsBy(quantity);
     }, false);
 
 
@@ -43,7 +44,8 @@ document.addEventListener("DOMContentLoaded", function()
         const quantity = button.dataset.decreaseQuantity || -1;
         const sku = button.dataset.itemSku;
 
-        StripeCheckout.increaseQuantity(sku, quantity);
+        StripeShop.increaseQuantity(sku, quantity);
+        StripeShop.uiUpdateItemsBy(quantity);
     }, false);
 
 
@@ -55,7 +57,8 @@ document.addEventListener("DOMContentLoaded", function()
         event.preventDefault();
 
         const button = event.target;
-        StripeCheckout.removeProduct(button.dataset.removeFromCart);
+        StripeShop.removeProduct(button.dataset.removeFromCart);
+        StripeShop.uiUpdateItems();
     }, false);
 
 
@@ -65,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function()
     document.addEventListener('click', function (event) {
         if (!event.target.matches('[data-redirect-to-checkout]')) return;
         event.preventDefault();
-        StripeCheckout.goToCheckout();
+        StripeShop.goToCheckout();
     }, false);
 
 });

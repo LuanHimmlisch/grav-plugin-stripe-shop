@@ -1,0 +1,24 @@
+{% extends 'partials/shop_base.html.twig' %}
+
+{% block content %}
+    {% set item_image = page.media.images|first %}
+{% include "partials/buttons/checkout.html.twig" %}
+    <div class="shop_product">
+        <div class="shop_product_main">
+            <h1 class="shop_product_title">{{ page.header.title }}</h1>
+            {% if item_image %}
+                <a class="shop_product_image" href="{{ page.url }}"><img src="{{ item_image.url|e }}" alt=""></a>
+            {% endif %}
+            
+            <div class="shop_product_options">
+                {% include 'partials/buttons/add_to_cart.html.twig' with { 'price_id': page.header.price_id, 'page_url': page.url, 'page_img': page.media.images|first.url,'price': page.header.price } %}
+                <h3 class="shop_product_price">${{ page.header.price }}</h3>
+                {% include 'partials/buttons/remove_from_cart.html.twig' with {"price_id": page.header.price_id} %}
+            </div>
+        </div>
+
+        <div class="shop_product_details">
+            <p>{{ page.content|raw }}</p>
+        </div>
+    </div>
+{% endblock %}

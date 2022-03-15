@@ -1,6 +1,6 @@
-# Stripe Checkout Plugin
+# Stripe Shop Plugin
 
-The **Stripe Checkout** Plugin is an extension for [Grav CMS](http://github.com/getgrav/grav).
+The **Stripe Shop** Plugin is an extension for [Grav CMS](http://github.com/getgrav/grav).
 
 This plugin is **simple** and **extensible**, this means that there is very little mandatory items for you. You are free to use any HTML elements, structure and styling you so wish.a
 
@@ -8,25 +8,25 @@ The plugin requires some use of the stripe dashboard which will be covered below
 
 ## Installation
 
-Installing the Stripe Checkout plugin can be done in one of three ways: The GPM (Grav Package Manager) installation method lets you quickly install the plugin with a simple terminal command, the manual method lets you do so via a zip file, and the admin method lets you do so via the Admin Plugin.
+Installing the Stripe Shop plugin can be done in one of three ways: The GPM (Grav Package Manager) installation method lets you quickly install the plugin with a simple terminal command, the manual method lets you do so via a zip file, and the admin method lets you do so via the Admin Plugin.
 
 ### GPM Installation (Preferred)
 
 To install the plugin via the [GPM](http://learn.getgrav.org/advanced/grav-gpm), through your system's terminal (also called the command line), navigate to the root of your Grav-installation, and enter:
 
-    bin/gpm install stripe-checkout
+    bin/gpm install stripe-shop
 
-This will install the Stripe Checkout plugin into your `/user/plugins`-directory within Grav. Its files can be found under `/your/site/grav/user/plugins/stripe-checkout`.
+This will install the Stripe Shop plugin into your `/user/plugins`-directory within Grav. Its files can be found under `/your/site/grav/user/plugins/stripe-shop`.
 
 ### Manual Installation
 
-To install the plugin manually, download the zip-version of this repository and unzip it under `/your/site/grav/user/plugins`. Then rename the folder to `stripe-checkout`. You can find these files on [GitHub](https://github.com/ricardo118/grav-plugin-stripe-checkout) or via [GetGrav.org](http://getgrav.org/downloads/plugins#extras).
+To install the plugin manually, download the zip-version of this repository and unzip it under `/your/site/grav/user/plugins`. Then rename the folder to `stripe-shop`. You can find these files on [GitHub](https://github.com/ricardo118/grav-plugin-stripe-shop) or via [GetGrav.org](http://getgrav.org/downloads/plugins#extras).
 
 You should now have all the plugin files under
 
-    /your/site/grav/user/plugins/stripe-checkout
+    /your/site/grav/user/plugins/stripe-shop
 
-> NOTE: This plugin is a modular component for Grav which may require other plugins to operate, please see its [blueprints.yaml-file on GitHub](https://github.com/ricardo118/grav-plugin-stripe-checkout/blob/master/blueprints.yaml).
+> NOTE: This plugin is a modular component for Grav which may require other plugins to operate, please see its [blueprints.yaml-file on GitHub](https://github.com/ricardo118/grav-plugin-stripe-shop/blob/master/blueprints.yaml).
 
 ### Admin Plugin
 
@@ -34,7 +34,7 @@ If you use the Admin Plugin, you can install the plugin directly by browsing the
 
 ## Configuration
 
-Before configuring this plugin, you should copy the `user/plugins/stripe-checkout/stripe-checkout.yaml` to `user/config/plugins/stripe-checkout.yaml` and only edit that copy.
+Before configuring this plugin, you should copy the `user/plugins/stripe-shop/stripe-shop.yaml` to `user/config/plugins/stripe-shop.yaml` and only edit that copy.
 
 Here is the default configuration and an explanation of available options:
 
@@ -46,7 +46,7 @@ cancel_url: 'https://example.com/checkout?result=canceled'          # The return
 checkout_route: '/checkout'
 ```
 
-Note that if you use the Admin Plugin, a file with your configuration named stripe-checkout.yaml will be saved in the `user/config/plugins/`-folder once the configuration is saved in the Admin.
+Note that if you use the Admin Plugin, a file with your configuration named stripe-shop.yaml will be saved in the `user/config/plugins/`-folder once the configuration is saved in the Admin.
 
 ## Usage
 
@@ -84,12 +84,12 @@ sku: sku_GUElmyYEy14yb5
 ---
 ```
 
-Now, all the plugin needs is the SKU, however the price is useful for displaying it prior to reaching stripe checkout.
+Now, all the plugin needs is the SKU, however the price is useful for displaying it prior to reaching Stripe Shop.
 
 Extra Steps:
 I recommend looking at the `example_product.html.twig` to see how to add the preset buttons for the plugin. There is no requirement to use these buttons/elements however they have instructions on them and good examples on how you can further expand your own customizations.
 
-I have also made global javascript variable `StripeCheckout` which you can access with your own custom javascript and play with. This variable holds the cart items and quantities within `StripeCheckout.items`. There are a number of useful methods you can use to manage your plugin. You can see all the available methods in `base.js` as well as examples of how to use them in `events.js` and `example.js`.
+I have also made global javascript variable `StripeShop` which you can access with your own custom javascript and play with. This variable holds the cart items and quantities within `StripeShop.items`. There are a number of useful methods you can use to manage your plugin. You can see all the available methods in `base.js` as well as examples of how to use them in `events.js` and `example.js`.
 
 ## Discord
 

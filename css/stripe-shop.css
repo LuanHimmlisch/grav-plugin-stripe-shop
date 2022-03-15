@@ -1,0 +1,124 @@
+.shop_product{
+    display: flex;
+}
+@media (max-width: 800px){
+    .shop_product{
+        text-align: center;
+        flex-wrap: wrap;
+    }
+    .shop_product div:first-child{
+        margin: 0 auto;
+    }
+    .shop_product_details{
+        margin: 0 auto;
+        text-align: justify;
+    }
+}
+.shop_product_details{
+    max-width: 60ch;
+    margin-left: auto;
+    padding-top: 3rem;
+}
+.shop_product_image{
+    display: block;
+}
+.shop_product_image img{
+    width: 100%;
+}
+.shop_product_price{
+    font-weight: bold;
+    margin: 0;
+}
+.shop_product_options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.shop_product_item{
+    position: relative;
+    display: inline-block;
+}
+.shop_product_item_options{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    z-index: 9;
+    justify-content: space-between;
+    width: 100%;
+    bottom: -5%;
+}
+.shop_product_item_price{
+    display: inline-block;
+    font-weight: bold;
+    margin: 0;
+    padding: 0 10px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: 3px solid #2fb31e;
+    color: #2fb31e;
+    background-color: #cbfac7;
+    vertical-align: middle;
+}
+.shop_product_item_title{
+    text-align: center;
+}
+
+
+.shop_category_item{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+.shop_category_item_title{
+    font-weight: bolder;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateY(50%);
+}
+
+
+[class^="shop_button"]{
+    font-size: 1.5rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+.shop_button_checkout{
+    position: fixed;
+    background-color: #920;
+    color: #fff;
+    right: 5%;
+    bottom: 5%;
+    z-index: 10;
+}
+.shop_checkout_items{
+    position: absolute;
+    background-color: #cf4119;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+    bottom: -45%;
+    right: -20%;
+    text-align: center;
+    font-weight: bold;
+}
+.shop_button_add{
+    width: 3rem;
+    height: 3rem;
+    font-size: 1rem;
+    background: #cf4119;
+    color: #fff;
+}
+.shop_button_remove{
+    width: 3rem;
+    height: 3rem;
+    font-size: 1rem;
+    background: #1c19cf;
+    color: #fff;
+}

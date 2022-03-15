@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function()
     const item_template = document.querySelector('[data-cart-item]');
     item_template.remove(); // remove the empty template before populating
 
-    (StripeCheckout.items).forEach(item =>
+    (StripeShop.items).forEach(item =>
         createCartItem(item)
     );
 
@@ -49,12 +49,12 @@ document.addEventListener("DOMContentLoaded", function()
     function updateQuantity(element) {
         const item = element.closest('[data-cart-item');
         const sku = item.dataset.cartItem;
-        item.querySelector('[data-item-quantity]').textContent = StripeCheckout.getProduct(sku).quantity;
+        item.querySelector('[data-item-quantity]').textContent = StripeShop.getProduct(sku).quantity;
     }
 
-    if (StripeCheckout.getUrlParameter('result') === 'success') {
+    if (StripeShop.getUrlParameter('result') === 'success') {
         // give it a small delay so we can display the cart first then clear it
-        setTimeout(function(){ StripeCheckout.clearCart(); }, 3000);
+        setTimeout(function(){ StripeShop.clearCart(); }, 3000);
     }
 
 });

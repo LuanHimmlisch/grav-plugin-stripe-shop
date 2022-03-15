@@ -1,37 +1,37 @@
 (function(window) {
     // Create the blank global variable
-    window.StripeCheckout = {};
+    window.StripeShop = {};
 
     document.addEventListener("DOMContentLoaded", function() {
         // copy the plugin's settings into the variable (required for the stripe key and urls)
-        StripeCheckout.settings = window.PLUGIN_STRIPE_CHECKOUT.settings || {};
+        StripeShop.settings = window.PLUGIN_STRIPE_CHECKOUT.settings || {};
         // Unused for now - could be used for adding variable text translations
-        StripeCheckout.translations = window.PLUGIN_STRIPE_CHECKOUT.strings || {};
+        StripeShop.translations = window.PLUGIN_STRIPE_CHECKOUT.strings || {};
     });
 
 })(window);
 
-(function(StripeCheckout) {
+(function(StripeShop) {
 
     // The plugin leverages localStorage https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
     // It uses localstorage to keep users's carts saved so they can be picked up even if they leave the website.
     // So, first thing we do is pull items from the storage, and if none exist, empty the cart.
-    StripeCheckout.items = JSON.parse(localStorage.getItem('stripe-checkout-items')) || [];
+    StripeShop.items = JSON.parse(localStorage.getItem('stripe-shop-items')) || [];
 
     /***********************************************************/
     /* Add a product to the cart
     /*
     /* This is the main function of the plugin, can be used via
-    /* StripeCheckout.addProduct('sku_here', quantity, extras)
+    /* StripeShop.addProduct('sku_here', quantity, extras)
     /* Quantity can be a positive or negative number (negative will
     /* reduce the quantity - at 0 or less, item gets removed)
     /* Extras can be any other product information you need to store,
     /* such as images, product routes, etc.
     /***********************************************************/
-    StripeCheckout.addProduct = function addProduct(sku, quantity, extras = null)
+    StripeShop.addProduct = function addProduct(sku, quantity, extras = null)
     {
         // Check if product already in the cart
-        const products = (StripeCheckout.items).filter(function(item) {
+        const products = (StripeShop.items).filter(function(item) {
             return item.sku === sku;
         });
         const product = products[0];
@@ -40,9 +40,9 @@
             // if no product, create one by pushing to the array
             if (extras) {
                 // any extras? add them too or skip them
-                StripeCheckout.items.push({sku: sku, quantity: quantity, extras: extras});
+                StripeShop.items.push({sku: sku, quantity: quantity, extras: extras});
             } else {
-                StripeCheckout.items.push({sku: sku, quantity: quantity});
+                StripeShop.items.push({sku: sku, quantity: quantity});
             }
 
             console.log('Added ' + quantity + ' of ' + sku);
@@ -61,16 +61,16 @@
         if (product && product.quantity <= 0) {
             // Quantity now at or below 0? remove the product
             console.log('Quantity at 0, removing product.');
-            StripeCheckout.removeProduct(product.sku);
+            StripeShop.removeProduct(product.sku);
             return;
         }
 
-        console.log(StripeCheckout.items);
-        StripeCheckout._saveToLocalStorage();
+        console.log(StripeShop.items);
+        StripeShop._saveToLocalStorage();
     };
 
     /***********************************************************/
-    /* Redirect to Stripe Checkout
+    /* Redirect to Stripe Shop
     /*
     /* The function that sends the user to the Stripe payment page
     /* This function can output error messages if you create an
@@ -78,22 +78,33 @@
     /* public key set in the plugin configs as well as the success
     /* and cancel urls.
     /***********************************************************/
-    StripeCheckout.goToCheckout = function goToCheckout()
+    StripeShop.goToCheckout = function goToCheckout()
     {
-        const stripe = Stripe(StripeCheckout.settings.key);
+        const stripe = Stripe(StripeShop.settings.key);
 
-        // When the customer clicks on the button, redirect them to Checkout.
-        stripe.redirectToCheckout({
+        if (StripeShop.settings.shipping_countries != undefined){
+            const stripeParams = {
 
-            lineItems: StripeCheckout.getOrderItems(),
+                lineItems: StripeShop.getOrderItems(),
+                mode: 'payment',
+                shippingAddressCollection: {
+                        allowedCountries: StripeShop.settings.shipping_countries,
+                    },
+                successUrl: StripeShop.settings.success_url,
+                cancelUrl: StripeShop.settings.cancel_url
+    
+            };
+        }
+
+        const stripeParams = {
+            lineItems: StripeShop.getOrderItems(),
             mode: 'payment',
-            shippingAddressCollection: {
-                    allowedCountries: StripeCheckout.settings.shipping_countries,
-                },
-            successUrl: StripeCheckout.settings.success_url,
-            cancelUrl: StripeCheckout.settings.cancel_url
-
-        }).then(function (result) {
+            successUrl: StripeShop.settings.success_url,
+            cancelUrl: StripeShop.settings.cancel_url
+        };
+        
+        stripe.redirectToCheckout(stripeParams)
+        .then(function (result) {
 
             if (result.error) {
                 // If `redirectToCheckout` fails due to a browser or network
@@ -112,10 +123,10 @@
     /* this function will just remove the extras for all the items
     /* to avoid any errors thrown by Stripe
     /***********************************************************/
-    StripeCheckout.getOrderItems = function getOrderItems()
+    StripeShop.getOrderItems = function getOrderItems()
     {
         let items = [];
-        (StripeCheckout.items).forEach(item =>
+        (StripeShop.items).forEach(item =>
             items.push({
                 price: item.sku,
                 quantity: item.quantity,
@@ -130,10 +141,10 @@
     /*
     /* Returns a product object
     /***********************************************************/
-    StripeCheckout.getProduct = function getProduct(sku)
+    StripeShop.getProduct = function getProduct(sku)
     {
-        const index = (StripeCheckout.items).findIndex(item => item.sku === sku);
-        return StripeCheckout.items[index];
+        const index = (StripeShop.items).findIndex(item => item.sku === sku);
+        return StripeShop.items[index];
     };
 
     /***********************************************************/
@@ -142,64 +153,64 @@
     /* Attempts to remove the requested SKU from the cart, does
     /* nothing if SKU not found. Updates localStorage
     /***********************************************************/
-    StripeCheckout.removeProduct = function removeProduct(sku)
+    StripeShop.removeProduct = function removeProduct(sku)
     {
-        const index = (StripeCheckout.items).findIndex(item => item.sku === sku);
+        const index = (StripeShop.items).findIndex(item => item.sku === sku);
 
         if (index === -1) {
             console.log('Product ' + sku + ' not in cart. Nothing removed.');
             return;
         }
 
-        (StripeCheckout.items).splice(index, 1);
+        (StripeShop.items).splice(index, 1);
 
-        console.log('Product ' + sku + ' removed.', StripeCheckout.items);
-        StripeCheckout._saveToLocalStorage();
+        console.log('Product ' + sku + ' removed.', StripeShop.items);
+        StripeShop._saveToLocalStorage();
     };
 
     /***********************************************************/
     /* Save the shopping cart to the local storage
     /***********************************************************/
-    StripeCheckout._saveToLocalStorage = function _saveToLocalStorage()
+    StripeShop._saveToLocalStorage = function _saveToLocalStorage()
     {
-        localStorage.setItem('stripe-checkout-items', JSON.stringify(StripeCheckout.items));
+        localStorage.setItem('stripe-shop-items', JSON.stringify(StripeShop.items));
     };
 
     /***********************************************************/
     /* Grabs the shopping cart from the local storage
     /***********************************************************/
-    StripeCheckout._getFromLocalStorage = function _getFromLocalStorage()
+    StripeShop._getFromLocalStorage = function _getFromLocalStorage()
     {
-        return JSON.parse(localStorage.getItem('stripe-checkout-items'));
+        return JSON.parse(localStorage.getItem('stripe-shop-items'));
     };
 
     /***********************************************************/
     /* Clear the shopping cart
     /***********************************************************/
-    StripeCheckout.clearCart = function clearCart()
+    StripeShop.clearCart = function clearCart()
     {
-        StripeCheckout.items = [];
-        localStorage.removeItem('stripe-checkout-items');
+        StripeShop.items = [];
+        localStorage.removeItem('stripe-shop-items');
 
         console.log('Cart & local storage has been cleared');
-        StripeCheckout._saveToLocalStorage();
+        StripeShop._saveToLocalStorage();
     };
 
     /***********************************************************/
     /* Increase item quantity
     /***********************************************************/
-    StripeCheckout.increaseQuantity = function increaseQuantity(sku, quantity)
+    StripeShop.increaseQuantity = function increaseQuantity(sku, quantity)
     {
-        StripeCheckout.addProduct(sku, quantity);
+        StripeShop.addProduct(sku, quantity);
     };
 
     /***********************************************************/
     /* Decrease Item Quantity
     /***********************************************************/
-    StripeCheckout.decreaseQuantity = function decreaseQuantity(sku, quantity)
+    StripeShop.decreaseQuantity = function decreaseQuantity(sku, quantity)
     {
         quantity = Math.sign(quantity) === -1 ? quantity : -(quantity);
-        StripeCheckout.addProduct(sku, quantity);
+        StripeShop.addProduct(sku, quantity);
     };
 
 
@@ -208,9 +219,9 @@
     /*
     /* A function to read URL query strings. example.com?test=blabla
     /* Usage:
-    /* StripeCheckout.getUrlParameter('test') returns 'blabla'
+    /* StripeShop.getUrlParameter('test') returns 'blabla'
     /***********************************************************/
-    StripeCheckout.getUrlParameter = function getUrlParameter(sParam) {
+    StripeShop.getUrlParameter = function getUrlParameter(sParam) {
         let sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
             sParameterName,
@@ -224,5 +235,5 @@
             }
         }
     };
-
-})(window.StripeCheckout);
+    
+})(window.StripeShop);

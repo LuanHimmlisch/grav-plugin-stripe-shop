@@ -7,6 +7,8 @@ Example: add this to your templates:
 {% include 'partials/buttons/remove_from_cart.html.twig' with {sku: page.header.sku} %}
 #}
 
-<button data-remove-from-cart="{{ sku }}">Remove from Cart</button>
+<button class="shop_button_remove" data-remove-from-cart="{{ price_id }}">
+    <i class="fa fa-trash" style="pointer-events: none;"></i>
+</button>
 
 {# <a href="#" data-remove-from-cart="{{ sku }}">Remove from Cart</a> #}

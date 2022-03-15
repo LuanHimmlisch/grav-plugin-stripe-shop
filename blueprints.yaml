@@ -1,15 +1,14 @@
-name: Stripe Checkout
-version: 1.1.0
-description: Simple Grav Stripe Checkout Wrapper with SCA2 support for european-selling shops
-icon: plug
+name: Stripe Shop
+version: 1.0.0
+description: "Simple but powerful shopping cart plugin for Stripe. Forked from Stripe Checkout."
+icon: shopping-cart
 author:
-  name: ricardo
-  email: ricardo@urbansquid.london
-homepage: https://github.com/ricardo118/grav-plugin-stripe-checkout
-demo: http://demo.yoursite.com
+  name: "Luan Himmlisch"
+  email: luan@himmlisch.com.mx
+homepage: https://github.com/luanhimmlisch/grav-plugin-stripe-shop
 keywords: grav, plugin, stripe, cart, shop, commerce, gdpr, sca, sca2, checkout, shopping, ecom, ecommerce
-bugs: https://github.com/ricardo118/grav-plugin-stripe-checkout/issues
-docs: https://github.com/ricardo118/grav-plugin-stripe-checkout/blob/develop/README.md
+bugs: https://github.com/luanhimmlisch/grav-plugin-stripe-shop/issues
+docs: https://github.com/luanhimmlisch/grav-plugin-stripe-shop/blob/master/README.md
 license: MIT
 
 form:
@@ -25,3 +24,39 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+  
+    built_in_css:
+        type: toggle
+        label: Use built in CSS
+        highlight: 1
+        default: 1
+        options:
+          1: Enabled
+          0: Disabled
+        validate:
+          type: bool
+
+    key: 
+      type: text
+      label: PLUGIN_STRIPE_SHOP.KEY
+      help: PLUGIN_STRIPE_SHOP.KEY_HELP
+
+    success_url: 
+      type: text
+      label: PLUGIN_STRIPE_SHOP.SUCCESS
+      help: PLUGIN_STRIPE_SHOP.SUCCESS_HELP
+
+    cancel_url: 
+      type: text
+      label: PLUGIN_STRIPE_SHOP.CANCEL
+      help: PLUGIN_STRIPE_SHOP.CANCEL_HELP
+
+    checkout_route: 
+      type: text
+      label: PLUGIN_STRIPE_SHOP.CHECKOUT
+      help: PLUGIN_STRIPE_SHOP.CHECKOUT_HELP
+
+    shipping_countries: 
+      type: commalist
+      label: PLUGIN_STRIPE_SHOP.SHIPPING
+      help: PLUGIN_STRIPE_SHOP.SHIPPING_HELP
